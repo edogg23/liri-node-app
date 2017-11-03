@@ -1,6 +1,13 @@
 var fs = require("fs");
 var twitterKeys = require("./keys.js");
 var Twitter = require("twitter");
+var Spotify = require('node-spotify-api');
+
+var spotify = new Spotify({
+  	id: '68fbdc7969b34b258faeeb45b8019904',
+  	secret: '97ccb1eddd904979906b5132defc045d',
+});
+
 
 var params = {screen_name: 'edog231'};
 var client = new Twitter({
@@ -10,64 +17,14 @@ var client = new Twitter({
 	access_token_secret: twitterKeys.access_token_secret,
 });
 
-client.get('statuses/user_timeline', params, function(error, tweets, response) {
-	if(error) {
-		console.log(error);
-	} else {
-		var tweetArr = [];
-		// console.log("tweets: " + tweets[2].text);
-		// console.log("tweets Created at: " + tweets[2].created_at);
-		for(var i = 0; i < tweets.length; i++) {
-			tweetArr.push({
-				"Latest Tweets: " : tweets[i].text,
-				"Created at: " : tweets[i].created_at,				
-			});
-		}
-		console.log(tweetArr);
-	}
- })
 
-// This is all for the Twit package. 
-// var Twit = require("twit");
-// var T = new Twit({
-// 	consumer_key: twitterKeys.consumer_key,
-// 	consumer_secret: twitterKeys.consumer_secret,
-// 	access_token: twitterKeys.access_token_key,
-// 	access_token_secret: twitterKeys.access_token_secret,
-// 	timeout_ms: 60*1000,
-// });
 
-// This posts to Twitter
-// client.post('statuses/update', {status: 'tweet from node using twitter npm package'}, function(err, data, response) {
-// 	console.log(data);
-// })
-
-client.get('search/tweets', { q: 'tweet from node using twitter npm package', count:20 }, function(err, data, response) {
-	// console.log(data);
-})
-console.log("twitterKeys: " + twitterKeys);
-
-// T.get('search/tweets', params,searchedData);
-
-function searchedData(err, data, response) {
-	// console.log(data);
-}
-
-// console.log()
-// console.log(twitterKeys.consumer_key);
-
-// this does the same thing as console.log(twitterKeys);
-// fs.readFile("keys.js", "utf8", function(error, data) {
-// 	if(error) {
-// 		return console.log(error);
-// 	}
-
-// 	console.log(data);
-// });
 
 var action = process.argv[2];
+var song = process.argv[3];
 console.log("process argv: " + process.argv);
 console.log("action: " + action);
+console.log("song: " + song);
 
 
 switch(action) {
@@ -90,6 +47,61 @@ switch(action) {
 
 function myTweets() {
 	console.log("myTweets function");
+	client.get('statuses/user_timeline', params, function(error, tweets, response) {
+		if(error) {
+			console.log(error);
+		} else {
+			var tweetArr = [];
+			// console.log("tweets: " + tweets[2].text);
+			// console.log("tweets Created at: " + tweets[2].created_at);
+			for(var i = 0; i < tweets.length; i++) {
+				tweetArr.push({
+					"Latest Tweets: " : tweets[i].text,
+					"Created at: " : tweets[i].created_at,				
+				});
+			}
+			console.log(tweetArr);
+		}
+	 })
+
+	// This is all for the Twit package. 
+	// var Twit = require("twit");
+	// var T = new Twit({
+	// 	consumer_key: twitterKeys.consumer_key,
+	// 	consumer_secret: twitterKeys.consumer_secret,
+	// 	access_token: twitterKeys.access_token_key,
+	// 	access_token_secret: twitterKeys.access_token_secret,
+	// 	timeout_ms: 60*1000,
+	// });
+
+	// This posts to Twitter
+	// client.post('statuses/update', {status: 'tweet from node using twitter npm package'}, function(err, data, response) {
+	// 	console.log(data);
+	// })
+
+	client.get('search/tweets', { q: 'tweet from node using twitter npm package', count:20 }, function(err, data, response) {
+		// console.log(data);
+	})
+	console.log("twitterKeys: " + twitterKeys);
+
+	// T.get('search/tweets', params,searchedData);
+
+	function searchedData(err, data, response) {
+		// console.log(data);
+	}
+
+	// console.log()
+	// console.log(twitterKeys.consumer_key);
+
+	// this does the same thing as console.log(twitterKeys);
+	// fs.readFile("keys.js", "utf8", function(error, data) {
+	// 	if(error) {
+	// 		return console.log(error);
+	// 	}
+
+	// 	console.log(data);
+	// });
+
 }
 
 function spotifySong() {

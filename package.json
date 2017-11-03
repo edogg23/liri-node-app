@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/edogg23/liri-node-app#readme",
   "dependencies": {
+    "node-spotify-api": "^1.0.7",
     "twit": "^2.2.9",
     "twitter": "^1.7.1"
   }
