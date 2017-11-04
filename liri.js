@@ -30,20 +30,20 @@ console.log("action: " + action);
 
 switch(action) {
 	case "my-tweets":
-	myTweets();
-	break;
+		myTweets();
+		break;
 
 	case "spotify-this-song":
-	spotifySong();
-	break;
+		spotifySong();
+		break;
 
 	case "movie-this": 
-	movieThis();
-	break;
+		movieThis();
+		break;
 
 	case "do-what-it-says":
-	doWhatItSays();
-	break;
+		doWhatItSays();
+		break;
 }
 
 function myTweets() {
@@ -106,34 +106,63 @@ function myTweets() {
 
 function spotifySong(songName) {
 	console.log("spotifySong function");
-	var songName = process.argv[3];
+	
+	
 	console.log("songName: " + songName);
-	// var songName = process.argv[3];
-	if(songName === undefined) {
-		songName = "The Sign";
-	};
-	console.log("songName2: " + songName);
-	spotify.search({ type: "track", query: songName }, function(err, data) {
-		console.log("songName3: " + songName);
-		if(err) {
-			console.log(err);
-			return;
-		}
-		// console.log("data: " + data);
-		var songs = data.tracks.items;
-		// console.log("songs: " + songs);
-		var data = [];
+	console.log("process.argv[2]: " + process.argv[2]);
+	console.log("process.argv[3]: " + process.argv[3]);
 
-		for (var i = 0; i < songs.length; i++) {
-			data.push ({
-				// "Artist(s)": songs[i].artists.map(getArtistNames),
-				"The song's name": songs[i].name,
-				"A preview link of the song from Spotify": songs[i].preview_url,
-				"The album that the song is from": songs[i].album.name,
-			});
+
+	// checks to see if 3rd command line argument is defined
+	if (typeof process.argv[3] !== 'undefined' && process.argv[3]) {
+		songName = process.argv[3];
+	}
+
+
+
+
+	// var songName = process.argv[3];
+	if (typeof songName !== 'undefined' && songName) {
+		if(process.argv[2] === "do-what-it-says") {
+			// songName = process.argv[3];
 		}
-		console.log("data: " , data);
-	});
+	} else {
+			songName = "Ace of Base The Sign";
+	}
+
+	console.log("songName2: " + songName);
+	params = songName;
+	console.log("params: " + params);
+	spotify.search(
+		{
+			type: "track",
+			query: params
+		},
+		function(err, data) {
+			console.log("params2: " + params);
+			if(err) {
+				console.log(err);
+				return;
+			} else {
+				var songInfo = data.tracks.items;
+				// console.log("songinfo: " , songInfo);
+				for (var i = 0; i < 5; i++) {
+					if (songInfo[i] != undefined) {
+						var spotifyResults =
+						"Artist: " + songInfo[i].artists[0].name + "\r\n" +
+						"Song: " + songInfo[i].name + "\r\n" +
+						"Album the song is from: " + songInfo[i].album.name + "\r\n" +
+						"Preview Url: " + songInfo[i].preview_url + "\r\n";
+						console.log(spotifyResults);
+						// log(spotifyResults); // calling log function
+					}
+				}
+			}
+			// console.log("data: " + data);
+			
+			// console.log("data: " , data);
+		}
+	);
 
 }
 
@@ -173,8 +202,9 @@ function doWhatItSays() {
 	console.log("doWhatItSays function");
 	fs.readFile("random.txt", "utf8", function(error, data) {
 		if(!error) {
-			var fileContents = data.split(", ");
-			spotifySong(fileContents[0], fileContents[1]);
+			var fileContents = data.split(",");
+			console.log("fileContents: " + fileContents);
+			spotifySong(fileContents[1]);
 		} else {
 			console.log(error);
 		}
