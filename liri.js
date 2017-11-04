@@ -23,8 +23,8 @@ var client = new Twitter({
 
 var action = process.argv[2];
 
-console.log("process argv: " + process.argv);
-console.log("action: " + action);
+// console.log("process argv: " + process.argv);
+// console.log("action: " + action);
 // console.log("songName: " + songName);
 
 
@@ -47,7 +47,7 @@ switch(action) {
 }
 
 function myTweets() {
-	console.log("myTweets function");
+	// console.log("myTweets function");
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
 		if(error) {
 			console.log(error);
@@ -83,7 +83,7 @@ function myTweets() {
 	client.get('search/tweets', { q: 'tweet from node using twitter npm package', count:20 }, function(err, data, response) {
 		// console.log(data);
 	})
-	console.log("twitterKeys: " + twitterKeys);
+	// console.log("twitterKeys: " + twitterKeys);
 
 	
 	function searchedData(err, data, response) {
@@ -105,12 +105,12 @@ function myTweets() {
 }
 
 function spotifySong(songName) {
-	console.log("spotifySong function");
+	// console.log("spotifySong function");
 	
 	
-	console.log("songName: " + songName);
-	console.log("process.argv[2]: " + process.argv[2]);
-	console.log("process.argv[3]: " + process.argv[3]);
+	// console.log("songName: " + songName);
+	// console.log("process.argv[2]: " + process.argv[2]);
+	// console.log("process.argv[3]: " + process.argv[3]);
 
 
 	// checks to see if 3rd command line argument is defined
@@ -130,16 +130,16 @@ function spotifySong(songName) {
 			songName = "Ace of Base The Sign";
 	}
 
-	console.log("songName2: " + songName);
+	// console.log("songName2: " + songName);
 	params = songName;
-	console.log("params: " + params);
+	// console.log("params: " + params);
 	spotify.search(
 		{
 			type: "track",
 			query: params
 		},
 		function(err, data) {
-			console.log("params2: " + params);
+			// console.log("params2: " + params);
 			if(err) {
 				console.log(err);
 				return;
@@ -167,7 +167,7 @@ function spotifySong(songName) {
 }
 
 function movieThis() {
-	console.log("movieThis function");
+	// console.log("movieThis function");
 	var movie = process.argv[3];
 	if(movie === undefined) {
 		movie = "Mr. Nobody";
@@ -199,11 +199,11 @@ function movieThis() {
 }
 
 function doWhatItSays() {
-	console.log("doWhatItSays function");
+	// console.log("doWhatItSays function");
 	fs.readFile("random.txt", "utf8", function(error, data) {
 		if(!error) {
 			var fileContents = data.split(",");
-			console.log("fileContents: " + fileContents);
+			// console.log("fileContents: " + fileContents);
 			spotifySong(fileContents[1]);
 		} else {
 			console.log(error);
